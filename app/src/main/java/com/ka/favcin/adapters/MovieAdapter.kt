@@ -1,5 +1,6 @@
 package com.ka.favcin.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,10 +8,11 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.ka.favcin.R
 import com.ka.favcin.data.Movie
+import com.ka.favcin.utils.pojo.Results
 import com.squareup.picasso.Picasso
 
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
-    private var movies: MutableList<Movie>
+    private var movies: MutableList<Results>
     private var onPosterClickListener: OnPosterClickListener? = null
     private var onReachEndListener: OnReachEndListener? = null
 
@@ -40,7 +42,11 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         if (movies.size >= 20 && position == movies.size - 4 && onPosterClickListener != null) {
             onReachEndListener!!.onReachEnd()
         }
-        val movie: Movie = movies[position]
+        val movie: Results = movies[position]
+        Log.d("TEST_OF_DATA","$movie /n")
+
+
+
         Picasso.get().load(movie.getPosterPath()).into(holder.imageViewSmallPoster)
     }
 
@@ -64,25 +70,26 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     fun clear() {
         movies.clear()
+
         notifyDataSetChanged()
     }
 
-    fun setMovies(movies: MutableList<Movie>) {
+    fun setMovies(movies: MutableList<Results>) {
         this.movies = movies
         notifyDataSetChanged()
     }
 
-    fun addMovies(movies: List<Movie>?) {
+    fun addMovies(movies: List<Results>?) {
         this.movies.addAll(movies!!)
         notifyDataSetChanged()
     }
 
-    fun getMovies(): List<Movie> {
+    fun getMovies(): List<Results> {
         return movies
     }
 
     init {
-        movies = ArrayList<Movie>()
+        movies = ArrayList<Results>()
     }
 
 }

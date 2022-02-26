@@ -9,7 +9,7 @@ data class Films(
      var page: Int = 0,
     @SerializedName("results")
     @Expose
-     var results: List<Result?>? = null,
+     var results: List<Results?>? = null,
     @SerializedName("total_pages")
     @Expose
     var totalPages: Int = 0,

@@ -26,8 +26,8 @@ interface ApiService {
 
     @GET("t/p")
     fun getLittlePostersFromApi(
-        @Query(SMALL_POSTER_SIZE) posterPath: String
-    ): Single<Image>
+        @Query(SMALL_POSTER_SIZE) posterPath: String?
+    ): Single<String?>
 
     @GET("t/p")
     fun getBigPostersFromApi(
