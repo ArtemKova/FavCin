@@ -1,8 +1,11 @@
 package com.ka.favcin.database
 import android.content.Context
+import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.ka.favcin.utils.pojo.Results
 
+@Database(entities = [Results::class], version = 1,exportSchema = false)
 abstract class AppDatabase:RoomDatabase() {
     companion object{
         private var db:AppDatabase?= null
@@ -25,4 +28,5 @@ abstract class AppDatabase:RoomDatabase() {
 
         }
     }
+    abstract fun movieDetailListDao():MovieDetailListDao
 }

@@ -15,7 +15,7 @@ interface MovieDetailListDao {
     fun getFilmInfo(id:Int?):LiveData<List<Results>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE )
-    fun insertMovie(films:LiveData<Results >)
+    fun insertMovie(filmList:List<Results>)
 
 
 }

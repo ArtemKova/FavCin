@@ -7,7 +7,12 @@ import androidx.lifecycle.ViewModel
 class UserViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = "Константин"
     }
     val text: LiveData<String> = _text
+    private val _text1 = MutableLiveData<String>().apply {
+        value = "dog@mail.com"
+    }
+    val text1: LiveData<String> = _text1
+//    fun texts:LiveData<MutableList<String>>
 }

@@ -16,7 +16,9 @@ interface ApiService {
         @Query(PARAMS_API_KEY) api_key: String = API_KEY,
         @Query(PARAMS_LANGUAGE) language: String = "ru-RU",
         @Query(PARAMS_SORT_BY) sort_by: String = "popularity.desc",
-        @Query(PARAMS_PAGE) page: Int = 1
+        @Query(PARAMS_PAGE) page: Int = 1,
+        @Query(CAST) people: String = "with_cast"
+
 //   @Query(PARAMS_MIN_VOTE_COUNT)vote_count:String = "vote_count.gte",
 //   @Query(SORT_BY_POPULARITY)popularity:String = "popularity.desc",
 //   @Query(SORT_BY_TOP_RATED)top_rated:String = "vote_average.desc",
@@ -44,6 +46,8 @@ interface ApiService {
         private const val SORT_BY_POPULARITY = "popularity.desc"
         private const val SORT_BY_TOP_RATED = "vote_average.desc"
         private const val MIN_VOTE_COUNT_VALUE = "1000"
+        private const val CAST = "with_cast"
+
         const val SMALL_POSTER_SIZE = "w185"
         const val BIG_POSTER_SIZE = "w780"
         val POPULARITY = 0

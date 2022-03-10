@@ -13,71 +13,97 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ka.favcin.R
 import com.ka.favcin.adapters.MovieAdapter
-import com.ka.favcin.data.Movie
-import com.ka.favcin.utils.JSONUtils
-import com.ka.favcin.utils.NetworkUtils
-import com.ka.favcin.utils.api.ApiFactory
-import com.ka.favcin.utils.pojo.Results
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import com.ka.favcin.adapters.MovieAdapter.OnPosterClickListener
+import com.ka.favcin.databinding.FragmentHomeBinding
+import com.ka.favcin.ui.MAIN
 
-import org.json.JSONObject
 
 class HomeFragment : Fragment() {
-
+lateinit var binding: FragmentHomeBinding
     private lateinit var homeViewModel: HomeViewModel
     private var recyclerViewPosters: RecyclerView? = null
 
-    private val compositeDisposable = CompositeDisposable()
+//    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-        val  movieAdapter= MovieAdapter()
+            ViewModelProvider(this)[HomeViewModel::class.java]
 
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
+
+        val movieAdapter = MovieAdapter()
+
+        val textView: TextView = binding.root.findViewById(R.id.text_home)
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
 
-        recyclerViewPosters = root.findViewById(R.id.recyclerViewPosters)
+
+        recyclerViewPosters = binding.root.findViewById(R.id.recyclerViewPosters)
         recyclerViewPosters!!.layoutManager = GridLayoutManager(context, 2)
         recyclerViewPosters!!.adapter = movieAdapter
-        val disposable = ApiFactory.apiService.getMoviesFromApi()
-            .map { it.results }
-//            .flatMap {ApiFactory.apiService1.getLittlePostersFromApi(posterPath = it.toString())}
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                var movies: MutableList<Results> = it as MutableList<Results>
+        homeViewModel.filmList.observe(viewLifecycleOwner, Observer {
+            movieAdapter.movies = (it)
+        })
+       movieAdapter.setOnPosterClickListener(onPosterClickListener = object :
+           OnPosterClickListener {
+            override fun onPosterClick(position: Int, id:Int) {
+                Log.d("ButtoPicture", "Кнопка сработала1 $position    $id")
+                val bundle = Bundle()
+                bundle.putInt("id",id)
+                MAIN.navController.navigate(R.id.action_navigation_home_to_navigation_dashboard, bundle)
+
+//                fun onPosterClick(position: Int) {
+//
+//
+//                    Log.d("ButtoPicture", "Кнопка сработала2 $position")
+////            val movie: Movie = movieAdapter.getMovies().get(position)
+////            val intent = Intent(this@MainActivity, DetailActivity::class.java)
+////            intent.putExtra("id", movie.getId())
+////            startActivity(intent)
+//                }
+            }
+        })
+
+//        val disposable = ApiFactory.apiService.getMoviesFromApi()
+//            .map { it.results }
+////            .flatMap {ApiFactory.apiService1.getLittlePostersFromApi(posterPath = it.toString())}
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe({
+//                var movies: MutableList<Results> = it as MutableList<Results>
+//
+//
+//                movieAdapter?.setMovies(movies)
+//                recyclerViewPosters!!.setAdapter(movieAdapter)
+//
+//                Log.d("TEST_OF_LOADING_DATA", "Success  ${movies}")
+//            }, {
+//
+//            })
+//        compositeDisposable.add(disposable)
+
+//        movieAdapter.setOnPosterClickListener(MovieAdapter.OnPosterClickListener() {
+//            fun onPosterClick(position: Int) {
+//                val movie: Movie = movieAdapter.getMovies().get(position)
+//                val intent = Intent(this@MainActivity, DetailActivity::class.java)
+//                intent.putExtra("id", movie.getId())
+//                startActivity(intent)
+//            }
+//        })
 
 
-                movieAdapter?.setMovies(movies)
-                recyclerViewPosters!!.setAdapter(movieAdapter)
-
-                Log.d("TEST_OF_LOADING_DATA", "Success  ${movies}")
-            }, {
-
-            })
-        compositeDisposable.add(disposable)
-
-
-
-
-
-
-        return root
+        return binding.root
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
-        compositeDisposable.dispose()
+//        compositeDisposable.dispose()
     }
 
 

@@ -1,9 +1,12 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+
 //    id 'com.google.devtools.ksp' version "$ksp_version"
 }
 apply plugin: 'kotlin-kapt'
+apply plugin:'kotlin-android-extensions'
+
 allprojects {
     repositories {
         maven { url "https://oss.jfrog.org/libs-snapshot" }
@@ -19,7 +22,7 @@ android {
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
-
+viewBinding.enabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
