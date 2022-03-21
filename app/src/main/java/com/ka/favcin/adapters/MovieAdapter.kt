@@ -18,6 +18,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         field = value
         notifyDataSetChanged()
     }
+
     private var onPosterClickListener: OnPosterClickListener? = null
     private var onReachEndListener: OnReachEndListener? = null
 

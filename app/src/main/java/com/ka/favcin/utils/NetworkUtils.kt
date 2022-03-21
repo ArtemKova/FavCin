@@ -30,7 +30,7 @@ public class NetworkUtils {
     private val PARAMS_PAGE = "page"
     private val PARAMS_MIN_VOTE_COUNT = "vote_count.gte"
 
-    private val API_KEY = ""
+    private val API_KEY = "f073b48419e738d4968dec1b725b9ede"
 
     private val SORT_BY_POPULARITY = "popularity.desc"
     private val SORT_BY_TOP_RATED = "vote_average.desc"

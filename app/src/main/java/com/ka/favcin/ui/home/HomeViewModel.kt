@@ -6,7 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ka.favcin.data.Movie
+
 import com.ka.favcin.database.AppDatabase
 import com.ka.favcin.utils.api.ApiFactory
 import com.ka.favcin.utils.pojo.Results
@@ -34,19 +34,20 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     }
     val text: LiveData<String> = _text
     fun loadData() {
+        var movies: MutableList<Results>
         val disposable = ApiFactory.apiService.getMoviesFromApi()
             .map { it.results }
 //            .flatMap {ApiFactory.apiService1.getLittlePostersFromApi(posterPath = it.toString())}
             .subscribeOn(Schedulers.io())
             .subscribe({
                 db.movieDetailListDao().insertMovie(it as List<Results>)
-                var movies: MutableList<Results> = it as MutableList<Results>
+                movies = it as MutableList<Results>
                 Log.d("TEST_OF_LOADING_DATA", "Success  $it")
             }, {
                 Log.d("TEST_OF_LOADING_DATA", "${it.message}")
 
             })
-        compositeDisposable.add(disposable)
+
     }
 
     override fun onCleared() {

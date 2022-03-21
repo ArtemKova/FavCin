@@ -7,8 +7,6 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "movie_detail_list")
 data class Results(
-
-
 //     @SerializedName("adult")
 //     @Expose
 //     private val adult: Boolean? = null,
@@ -19,7 +17,7 @@ data class Results(
 //
 //    @SerializedName("genre_ids")
 //    @Expose
-//    private var genreIds: List<Int>? = null,
+//     val genreIds: List<Integer>,
 
     @PrimaryKey
     @SerializedName("id")
@@ -67,103 +65,102 @@ data class Results(
 
     @SerializedName("with_cast")
     @Expose
-    private var people: String? = null
+    private var people: String? = null)
+// {
+//
+//
+//    fun getPosterPath(): String? {
+//        return posterPath
+//
+//    }
+//
+//    fun setPosterPath(posterPath: String?) {
+//        this.posterPath = posterPath
+//    }
+//
+//
+//
+//    fun getId(): Int? {
+//        return id
+//    }
+//
+//    fun setId(id: Int) {
+//        this.id = id
+//    }
+//
+//    fun getOriginalLanguage(): String? {
+//        return originalLanguage
+//    }
+//
+//    fun getOriginalLanguage(originalLanguage: String) {
+//        this.originalLanguage = originalLanguage
+//    }
+//
+//    fun getVoteCount(): Int? {
+//        return voteCount
+//    }
+//
+//    fun setVoteCount(voteCount: Int) {
+//        this.voteCount = voteCount
+//    }
+//
+//    fun getTitle(): String? {
+//        return title
+//    }
+//
+//    fun setTitle(title: String?) {
+//        this.title = title
+//    }
+//
+//    fun getOriginalTitle(): String? {
+//        return originalTitle
+//    }
+//
+//    fun setOriginalTitle(originalTitle: String?) {
+//        this.originalTitle = originalTitle
+//    }
+//
+//    fun getOverview(): String? {
+//        return overview
+//    }
+//
+//    fun setOverview(overview: String?) {
+//        this.overview = overview
+//    }
+//
+//
+//    fun getVoteAverage(): Double? {
+//        return voteAverage
+//    }
+//
+//    fun setVoteAverage(voteAverage: Double) {
+//        this.voteAverage = voteAverage
+//    }
+//
+//    fun getPopularity(): Double? {
+//        return popularity
+//    }
+//
+//    fun setPopularity(popularity: Double) {
+//        this.popularity = popularity
+//    }
+//
+//    fun getReleaseDate(): String? {
+//        return releaseDate
+//    }
+//
+//    fun setReleaseDate(releaseDate: String?) {
+//        this.releaseDate = releaseDate
+//    }
+//
+//    fun getPeople(): String? {
+//        return people
+//    }
+//
+//    fun setPeople(people: String?) {
+//        this.people = people
+//    }
 
-) {
 
-
-    fun getPosterPath(): String? {
-        return posterPath
-
-    }
-
-    fun setPosterPath(posterPath: String?) {
-        this.posterPath = posterPath
-    }
-
-
-
-    fun getId(): Int? {
-        return id
-    }
-
-    fun setId(id: Int) {
-        this.id = id
-    }
-
-    fun getOriginalLanguage(): String? {
-        return originalLanguage
-    }
-
-    fun getOriginalLanguage(originalLanguage: String) {
-        this.originalLanguage = originalLanguage
-    }
-
-    fun getVoteCount(): Int? {
-        return voteCount
-    }
-
-    fun setVoteCount(voteCount: Int) {
-        this.voteCount = voteCount
-    }
-
-    fun getTitle(): String? {
-        return title
-    }
-
-    fun setTitle(title: String?) {
-        this.title = title
-    }
-
-    fun getOriginalTitle(): String? {
-        return originalTitle
-    }
-
-    fun setOriginalTitle(originalTitle: String?) {
-        this.originalTitle = originalTitle
-    }
-
-    fun getOverview(): String? {
-        return overview
-    }
-
-    fun setOverview(overview: String?) {
-        this.overview = overview
-    }
-
-
-    fun getVoteAverage(): Double? {
-        return voteAverage
-    }
-
-    fun setVoteAverage(voteAverage: Double) {
-        this.voteAverage = voteAverage
-    }
-
-    fun getPopularity(): Double? {
-        return popularity
-    }
-
-    fun setPopularity(popularity: Double) {
-        this.popularity = popularity
-    }
-
-    fun getReleaseDate(): String? {
-        return releaseDate
-    }
-
-    fun setReleaseDate(releaseDate: String?) {
-        this.releaseDate = releaseDate
-    }
-
-    fun getPeople(): String? {
-        return people
-    }
-
-    fun setPeople(people: String?) {
-        this.people = people
-    }
-
-
-}
+//}
 

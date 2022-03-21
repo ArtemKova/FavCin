@@ -1,13 +1,18 @@
 package com.ka.favcin.utils.api
 
 import android.media.Image
+import com.ka.favcin.utils.pojo.Casts
 import com.ka.favcin.utils.pojo.Films
-import io.reactivex.Observable
-import io.reactivex.rxjava3.core.Single
+import com.ka.favcin.utils.pojo.Genress
 
+import io.reactivex.rxjava3.core.Single
+import retrofit2.Call
+import io.reactivex.rxjava3.core.Observable
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import kotlin.contracts.Returns
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 
 interface ApiService {
@@ -35,6 +40,22 @@ interface ApiService {
     fun getBigPostersFromApi(
         @Query(BIG_POSTER_SIZE) posterPath: String
     ): Single<Image>
+
+    @GET("genre/movie/list")
+    fun getGenreList(
+        @Query(PARAMS_API_KEY) api_key: String = API_KEY,
+        @Query(PARAMS_LANGUAGE) language: String = "ru-RU"
+    ): Observable<Genress>
+
+    @GET("movie/{movie_id}/credits")
+    fun getActors(
+        @Path("movie_id") idMovie:Int,
+        @Query(PARAMS_API_KEY) api_key: String = API_KEY,
+        @Query(PARAMS_LANGUAGE) language: String = "ru-RU"
+    ): Observable<Casts>
+
+
+
 
     companion object {
         private const val PARAMS_API_KEY = "api_key"
