@@ -8,25 +8,29 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 import com.ka.favcin.database.AppDatabase
+import com.ka.favcin.newarch.data.db.MovieDetailListDao
 import com.ka.favcin.utils.api.ApiFactory
-import com.ka.favcin.utils.pojo.Results
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import com.ka.favcin.newarch.data.db.Results
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import javax.inject.Inject
 
+class HomeViewModel @Inject constructor(
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
+    private val db: MovieDetailListDao
+) : ViewModel() {
+
     private val compositeDisposable = CompositeDisposable()
 
     init {
         loadData()
     }
 
-    private val db = AppDatabase.getInstance(application)
-    val filmList = db.movieDetailListDao().getResults()
+
+    val filmList = db.getResults()
 
     fun getDetailInfo(id: Int): LiveData<List<Results>> {
-        return db.movieDetailListDao().getFilmInfo(id)
+        return db.getFilmInfo(id)
     }
 
     private val _text = MutableLiveData<String>().apply {
@@ -40,7 +44,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 //            .flatMap {ApiFactory.apiService1.getLittlePostersFromApi(posterPath = it.toString())}
             .subscribeOn(Schedulers.io())
             .subscribe({
-                db.movieDetailListDao().insertMovie(it as List<Results>)
+                db.insertMovie(it as List<Results>)
                 movies = it as MutableList<Results>
                 Log.d("TEST_OF_LOADING_DATA", "Success  $it")
             }, {

@@ -1,11 +1,11 @@
 package com.ka.favcin
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -13,26 +13,34 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ka.favcin.databinding.ActivityMainBinding
 import com.ka.favcin.ui.MAIN
 import com.ka.favcin.utils.api.ApiFactory
-import com.ka.favcin.utils.pojo.Genre
+import com.ka.favcin.newarch.data.api.model.Genre
+import com.ka.favcin.ui.FanApp
+import com.ka.favcin.ui.ViewModelFactory
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
+import javax.inject.Inject
 
-
+//@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
     lateinit var navController: NavController
     private val compositeDisposable = CompositeDisposable()
 
+    @Inject
+//    lateinit var viewModelFactory: ViewModelFactory
+//    private val component by lazy {
+//        (application as FanApp).component
+//    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         MAIN = this
-
+        val sharedPreference =  getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
         var genr: List<Genre>
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
@@ -55,6 +63,14 @@ class MainActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Log.d("TEST_OF_LOADING_DATA1", "Success  ${it}         ")
+
+                for (i in it.genres){
+                    Log.d("TEST_OF_LOADING_DATA1", "  ${i.id}        ${i.name} ")
+                    var editor = sharedPreference.edit()
+                    editor.putString("${i.id}","${i.name}")
+                    editor.apply()
+                }
+
 //           genr = it
             }, {
                 Log.d("TEST_OF_LOADING_DATA1", "NoSuccess $it ")

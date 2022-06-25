@@ -6,9 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ka.favcin.R
 import com.ka.favcin.utils.api.ApiFactory
-import com.ka.favcin.utils.api.ApiService
-import com.ka.favcin.utils.pojo.Actor
-import com.ka.favcin.utils.pojo.Casts
+import com.ka.favcin.newarch.data.api.ApiService
+import com.ka.favcin.newarch.data.api.model.Actor
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.actor_item.view.*
 

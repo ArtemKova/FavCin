@@ -1,4 +1,4 @@
-package com.ka.favcin.utils.pojo
+package com.ka.favcin.newarch.data.api.model
 
 data class Genre(
     val id:Integer,

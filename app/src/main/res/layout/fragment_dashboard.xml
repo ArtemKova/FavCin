@@ -11,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:adjustViewBounds="false"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
@@ -43,12 +44,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip4"
-                android:layout_width="133dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:textSize="8sp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/genrRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <TextView
                 android:id="@+id/name_movie"
@@ -66,10 +65,14 @@
 
             <RatingBar
                 android:id="@+id/ratingBar"
+                style="@style/Widget.AppCompat.RatingBar"
                 android:layout_width="255dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:drawingCacheQuality="high" />
+                android:drawingCacheQuality="high"
+                android:rating="5"
+                android:numStars="5"
+                android:max="@integer/material_motion_duration_long_2" />
 
             <TextView
                 android:id="@+id/describe_movie"

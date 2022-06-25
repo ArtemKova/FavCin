@@ -1,78 +1,108 @@
 package com.ka.favcin.ui.dashboard
 
-import android.graphics.ImageFormat
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ka.favcin.R
 import com.ka.favcin.adapters.ActorAdapter
-import com.ka.favcin.adapters.MovieAdapter
+import com.ka.favcin.adapters.GenrAdapter
 import com.ka.favcin.databinding.FragmentDashboardBinding
-import com.ka.favcin.databinding.FragmentHomeBinding
-import com.ka.favcin.ui.MAIN
 import com.ka.favcin.ui.home.HomeViewModel
 import com.ka.favcin.utils.api.ApiFactory
-import com.ka.favcin.utils.api.ApiService
-import com.ka.favcin.utils.pojo.Casts
-import com.ka.favcin.utils.pojo.Results
+import com.ka.favcin.newarch.data.api.ApiService
+import com.ka.favcin.newarch.data.api.model.Casts
+import com.ka.favcin.newarch.data.db.Results
+import com.ka.favcin.ui.FanApp
+import com.ka.favcin.ui.ViewModelFactory
 import com.squareup.picasso.Picasso
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import javax.inject.Inject
 
 class DashboardFragment : Fragment() {
     lateinit var binding: FragmentDashboardBinding
-    private lateinit var dashboardViewModel: DashboardViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+//    private lateinit var dashboardViewModel: DashboardViewModel
     private lateinit var homeViewModel: HomeViewModel
     private val compositeDisposable = CompositeDisposable()
     private var recyclerViewActors: RecyclerView? = null
+    private var recyclerViewGenres: RecyclerView? = null
+    private val component by lazy {
+        (requireActivity().application as FanApp).component
+    }
+    val sharedPreference =
+        this.getActivity()?.getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         var id = arguments?.getInt("id")
+        val sharedPreference =
+            this.getActivity()?.getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
         binding = FragmentDashboardBinding.inflate(layoutInflater, container, false)
-        dashboardViewModel =
-            ViewModelProvider(this)[DashboardViewModel::class.java]
+//        dashboardViewModel =
+//            ViewModelProvider(this)[DashboardViewModel::class.java]
         homeViewModel =
-            ViewModelProvider(this)[HomeViewModel::class.java]
+            ViewModelProvider(this,viewModelFactory)[HomeViewModel::class.java]
         val actorAdapter = ActorAdapter()
+        val genrAdapter = GenrAdapter()
         Log.d("ButtoPicture", "Кнопка сработала3 $id  ")
         var genr: Casts? = null
         recyclerViewActors = binding.root.findViewById(R.id.recycler_stars)
-        recyclerViewActors!!.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewGenres = binding.root.findViewById(R.id.genrRecycler)
+        recyclerViewActors!!.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewGenres!!.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         recyclerViewActors!!.adapter = actorAdapter
+        recyclerViewGenres!!.adapter = genrAdapter
         lateinit var movie: Results
         if (id != null) {
             homeViewModel.getDetailInfo(id).observe(viewLifecycleOwner, Observer { it ->
                 movie = it[0]
+
 //                val mov = movie.map{it}
                 Log.d("ButtoPicture", "Кнопка сработала4 $movie  ")
                 Picasso.get()
-                    .load(ApiFactory.BASE_POSTER_URL + ApiService.BIG_POSTER_SIZE + movie.getPosterPath())
+                    .load(ApiFactory.BASE_POSTER_URL + ApiService.BIG_POSTER_SIZE + movie.posterPath)
                     .into(bigPosterView)
-                name_movie.text = movie.getTitle()
-                describe_movie.text = movie.getOverview()
-                ratingBar.rating = movie.getVoteAverage()?.toFloat() ?: 3f
+                name_movie.text = movie.title
+                describe_movie.text = movie.overview
+                ratingBar.rating = movie.voteAverage?.toFloat() ?: 3f
+                var genre = movie.genreIds
+                Log.d("TEST_OF_LOADING_DATA3", "Success  ${genre}         ")
+                if (genre != null) {
+                     var gen: MutableList<String> = mutableListOf()
+                    for (i in genre) {
+                     gen.add(sharedPreference?.getString(i, "") ?: "")
+                    }
+                    Log.d("TEST_OF_LOADING_DATA3", "Success  ${gen}         ")
+                    genrAdapter.genr = gen
+                }
             })
+
             val disposable = ApiFactory.apiService.getActors(idMovie = id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     Log.d("TEST_OF_LOADING_DATA2", "Success  ${it.cast}         ")
-           genr = it
+                    genr = it
                     var t = it.cast
                     actorAdapter.actors = t
                 }, {
@@ -80,15 +110,16 @@ class DashboardFragment : Fragment() {
                 })
             compositeDisposable.add(disposable)
 //        val textView: TextView = binding.root.findViewById(R.id.text_dashboard)
-            dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+//            dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
 //            textView.text = it
-            })
+//            })
 
 
         }
 
         return binding.root
     }
+
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.dispose()

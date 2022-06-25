@@ -3,7 +3,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.ka.favcin.utils.pojo.Results
+import com.ka.favcin.newarch.data.db.MovieDetailListDao
+import com.ka.favcin.newarch.data.db.Results
 
 @Database(entities = [Results::class], version = 1,exportSchema = false)
 abstract class AppDatabase:RoomDatabase() {
@@ -28,5 +29,5 @@ abstract class AppDatabase:RoomDatabase() {
 
         }
     }
-    abstract fun movieDetailListDao():MovieDetailListDao
+    abstract fun movieDetailListDao(): MovieDetailListDao
 }

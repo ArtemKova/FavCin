@@ -1,5 +1,6 @@
 package com.ka.favcin.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,14 +16,30 @@ import com.ka.favcin.R
 import com.ka.favcin.adapters.MovieAdapter
 import com.ka.favcin.adapters.MovieAdapter.OnPosterClickListener
 import com.ka.favcin.databinding.FragmentHomeBinding
+import com.ka.favcin.ui.FanApp
 import com.ka.favcin.ui.MAIN
+import com.ka.favcin.ui.ViewModelFactory
+import javax.inject.Inject
 
 
 class HomeFragment : Fragment() {
-lateinit var binding: FragmentHomeBinding
+    lateinit var binding: FragmentHomeBinding
     private lateinit var homeViewModel: HomeViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
+    }
+
     private var recyclerViewPosters: RecyclerView? = null
 
+
+
+    private val component by lazy {
+        (requireActivity().application as FanApp).component
+    }
 //    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreateView(
@@ -32,7 +49,7 @@ lateinit var binding: FragmentHomeBinding
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         homeViewModel =
-            ViewModelProvider(this)[HomeViewModel::class.java]
+            ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
 
 
         val movieAdapter = MovieAdapter()
@@ -49,13 +66,16 @@ lateinit var binding: FragmentHomeBinding
         homeViewModel.filmList.observe(viewLifecycleOwner, Observer {
             movieAdapter.movies = (it)
         })
-       movieAdapter.setOnPosterClickListener(onPosterClickListener = object :
-           OnPosterClickListener {
-            override fun onPosterClick(position: Int, id:Int) {
+        movieAdapter.setOnPosterClickListener(onPosterClickListener = object :
+            OnPosterClickListener {
+            override fun onPosterClick(position: Int, id: Int) {
                 Log.d("ButtoPicture", "Кнопка сработала1 $position    $id")
                 val bundle = Bundle()
-                bundle.putInt("id",id)
-                MAIN.navController.navigate(R.id.action_navigation_home_to_navigation_dashboard, bundle)
+                bundle.putInt("id", id)
+                MAIN.navController.navigate(
+                    R.id.action_navigation_home_to_navigation_dashboard,
+                    bundle
+                )
 
 //                fun onPosterClick(position: Int) {
 //

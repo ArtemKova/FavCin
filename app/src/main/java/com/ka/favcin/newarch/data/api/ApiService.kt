@@ -1,18 +1,15 @@
-package com.ka.favcin.utils.api
+package com.ka.favcin.newarch.data.api
 
 import android.media.Image
-import com.ka.favcin.utils.pojo.Casts
-import com.ka.favcin.utils.pojo.Films
-import com.ka.favcin.utils.pojo.Genress
+import com.ka.favcin.newarch.data.api.model.Casts
+import com.ka.favcin.newarch.data.api.model.Films
+import com.ka.favcin.newarch.data.api.model.Genress
 
 import io.reactivex.rxjava3.core.Single
-import retrofit2.Call
 import io.reactivex.rxjava3.core.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import kotlin.contracts.Returns
-import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 
 interface ApiService {
