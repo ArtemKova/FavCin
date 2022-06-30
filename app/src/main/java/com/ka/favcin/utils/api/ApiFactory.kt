@@ -1,5 +1,6 @@
 package com.ka.favcin.utils.api
 
+import com.ka.favcin.newarch.data.api.ApiService
 import retrofit2.Retrofit
 //import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory

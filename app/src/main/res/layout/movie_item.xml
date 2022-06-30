@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/imageViewSmallPoster"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:adjustViewBounds="true"
-    android:contentDescription="@string/poster_of_movie">
+
+
+    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/imageViewSmallPoster"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/poster_of_movie">
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/genrFirst"-->
+<!--        android:layout_width="74dp"-->
+<!--        android:layout_height="wrap_content" />-->
+
 
 </ImageView>
+
+
