@@ -1,9 +1,9 @@
-package com.ka.favcin.newarch.data.api
+package com.ka.core.data.api
 
 import android.media.Image
-import com.ka.favcin.newarch.data.api.model.Casts
-import com.ka.favcin.newarch.data.api.model.Films
-import com.ka.favcin.newarch.data.api.model.Genress
+import com.ka.core.data.api.model.Casts
+import com.ka.core.data.api.model.Films
+import com.ka.core.data.api.model.Genress
 
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.core.Observable
@@ -18,7 +18,7 @@ interface ApiService {
         @Query(PARAMS_API_KEY) api_key: String = API_KEY,
         @Query(PARAMS_LANGUAGE) language: String = "ru-RU",
         @Query(PARAMS_SORT_BY) sort_by: String = "popularity.desc",
-        @Query(PARAMS_PAGE) page: Int = 1,
+        @Query(PARAMS_PAGE) page: Int = 100,
         @Query(CAST) people: String = "with_cast"
 
 //   @Query(PARAMS_MIN_VOTE_COUNT)vote_count:String = "vote_count.gte",
@@ -31,7 +31,7 @@ interface ApiService {
     @GET("t/p")
     fun getLittlePostersFromApi(
         @Query(SMALL_POSTER_SIZE) posterPath: String?
-    ): Single<String?>
+    ): Single<Any>
 
     @GET("t/p")
     fun getBigPostersFromApi(

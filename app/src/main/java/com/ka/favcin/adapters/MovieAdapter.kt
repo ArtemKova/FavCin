@@ -6,17 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ka.favcin.R
 import com.ka.favcin.utils.api.ApiFactory
-import com.ka.favcin.newarch.data.api.ApiService
-import com.ka.favcin.newarch.data.db.Results
+import com.ka.core.data.api.ApiService
+import com.ka.core.data.db.Results
 import com.squareup.picasso.Picasso
 
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
 
-    var movies: List<Results> = listOf()
+    var movies: List<com.ka.core.data.db.Results> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -55,29 +56,28 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         if (movies.size >= 20 && position == movies.size - 4 && onPosterClickListener != null) {
-//            onReachEndListener!!.onReachEnd()
+            onReachEndListener!!.onReachEnd()
         }
-        val sharedPreference =
-            context.getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
-        val genrAdapter = GenrAdapter()
-        val movie: Results = movies[position]
-        var genre = movie.genreIds
-        Log.d("TEST_OF_LOADING_DATA3", "Success  ${genre}         ")
-        if (genre != null) {
-            var gen: MutableList<String> = mutableListOf()
-            for (i in genre) {
-
-
-                gen.add(sharedPreference?.getString(i, "") ?: "")
-            }
-            Log.d("TEST_OF_LOADING_DATA3", "Success  ${gen}         ")
-            genrAdapter.genr = gen
-        }
-
+//        val sharedPreference =
+//            context.getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
+//        val genrAdapter = GenrAdapter()
+        val movie: com.ka.core.data.db.Results = movies[position]
+//        var genre = movie.genreIds
+//        Log.d("TEST_OF_LOADING_DATA3", "Success  ${genre}         ")
+//        if (genre != null) {
+//            var gen: MutableList<String> = mutableListOf()
+//            for (i in genre) {
+//                gen.add(sharedPreference?.getString(i, "") ?: "")
+//            }
+//            Log.d("TEST_OF_LOADING_DATA3", "Success  ${gen}         ")
+//            genrAdapter.genr = gen
+//        }
+holder.textViewRaiting.text= movie.voteAverage.toString()
         Log.d("TEST_OF_DATA", "$movie /n")
         Picasso.get()
-            .load(ApiFactory.BASE_POSTER_URL + ApiService.SMALL_POSTER_SIZE + movie.posterPath)
+            .load(ApiFactory.BASE_POSTER_URL + com.ka.core.data.api.ApiService.SMALL_POSTER_SIZE + movie.posterPath)
             .into(holder.imageViewSmallPoster)
+
     }
 
     override fun getItemCount(): Int {
@@ -99,7 +99,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
 
         val imageViewSmallPoster: ImageView
-
+val  textViewRaiting:TextView
         init {
             imageViewSmallPoster = itemView.findViewById(R.id.imageViewSmallPoster)
             itemView.setOnClickListener {
@@ -110,6 +110,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
                 }
             }
+            textViewRaiting= itemView.findViewById(R.id.textViewRaiting)
         }
     }
 

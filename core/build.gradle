@@ -1,12 +1,9 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-
-//    id 'dagger.hilt.android.plugin'
-//    id 'com.google.devtools.ksp' version "$ksp_version"
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
 }
 apply plugin: 'kotlin-kapt'
+
 
 allprojects {
     repositories {
@@ -14,22 +11,14 @@ allprojects {
     }
 }
 android {
-
-
     compileSdkVersion 32
-    buildToolsVersion '30.0.3'
 
     defaultConfig {
-        applicationId "com.ka.favcin"
         minSdkVersion 23
         targetSdkVersion 32
-        versionCode 1
-        versionName "1.0"
-viewBinding.enabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-    buildFeatures {
-        viewBinding = true
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -38,27 +27,21 @@ viewBinding.enabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures {
+        viewBinding = true
+    }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
-//        freeCompilerArgs += "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi"
-        freeCompilerArgs += [
-                "-Xjvm-default=all",
-        ]
+        freeCompilerArgs += "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi"
     }
 }
-//kapt {
-//    correctErrorTypes = true
-//}
-
-
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'com.google.android.material:material:1.6.1'
@@ -67,32 +50,30 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
-    implementation project(path: ':core')
-    testImplementation 'junit:junit:'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    def room_version = "2.4.2"
 
-    //noinspection GradleDependency
+    def room_version = "2.4.1"
     implementation "androidx.room:room-runtime:$room_version"
-    kapt  "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    implementation 'com.google.dagger:dagger:2.40.1'
+    kapt 'com.google.dagger:dagger-compiler:2.40.1'
 
     // optional - RxJava support for Room
-    //noinspection GradleDependency
     implementation "androidx.room:room-rxjava2:$room_version"
 
     // optional - Guava support for Room, including Optional and ListenableFuture
-    //noinspection GradleDependency
     implementation "androidx.room:room-guava:$room_version"
 
     // optional - Test helpers
-    //noinspection GradleDependency
     testImplementation "androidx.room:room-testing:$room_version"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     //noinspection LifecycleAnnotationProcessorWithJava8
-    kapt  "androidx.lifecycle:lifecycle-compiler:2.5.1"
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.7.10")
-    implementation "androidx.activity:activity-ktx:1.5.1"
+    kapt "androidx.lifecycle:lifecycle-compiler:2.5.0"
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.21")
+    implementation "androidx.activity:activity-ktx:1.5.0"
 
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -100,8 +81,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 //LiveData
-     def lifecycle_version = "2.5.1"
-     def arch_version = "2.1.0"
+    def lifecycle_version = "2.5.0-alpha02"
+    def arch_version = "2.1.0"
 
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
@@ -116,8 +97,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
 
     // Annotation processor
-    //noinspection LifecycleAnnotationProcessorWithJava8
-    kapt ("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
+    kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
     // alternately - if using Java8, use the following instead of lifecycle-compiler
     implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle_version")
 
@@ -135,37 +115,31 @@ dependencies {
     //Room
     def roomVersion = "2.4.2"
 
-    //noinspection GradleDependency
     implementation("androidx.room:room-runtime:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
 
     // To use Kotlin annotation processing tool (kapt)
-//    kapt("androidx.room:room-compiler:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
     // To use Kotlin Symbolic Processing (KSP)
 //    ksp("androidx.room:room-compiler:$roomVersion")
 
     // optional - Kotlin Extensions and Coroutines support for Room
-    //noinspection GradleDependency
     implementation("androidx.room:room-ktx:$roomVersion")
 
     // optional - RxJava2 support for Room
-    //noinspection GradleDependency
     implementation("androidx.room:room-rxjava2:$roomVersion")
 
     // optional - RxJava3 support for Room
-    //noinspection GradleDependency
     implementation("androidx.room:room-rxjava3:$roomVersion")
 
     // optional - Guava support for Room, including Optional and ListenableFuture
-    //noinspection GradleDependency
     implementation("androidx.room:room-guava:$roomVersion")
 
     // optional - Test helpers
-    //noinspection GradleDependency
     testImplementation("androidx.room:room-testing:$roomVersion")
 
     // optional - Paging 3 Integration
-    implementation("androidx.room:room-paging:2.4.3")
+    implementation("androidx.room:room-paging:2.4.1")
 
 
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
@@ -173,11 +147,4 @@ dependencies {
     // explicitly depend on RxJava's latest version for bug fixes and new features.
     // (see https://github.com/ReactiveX/RxJava/releases for latest 3.x.x version)
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
-//    dependencies {
-//        implementation("com.google.dagger:hilt-android:2.40.1")
-//        kapt("com.google.dagger:hilt-android-compiler:2.38.1")
-//    }
-    implementation 'com.google.dagger:dagger:2.40.1'
-    kapt 'com.google.dagger:dagger-compiler:2.40.1'
-
 }

@@ -3,9 +3,10 @@ package com.ka.favcin.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ka.favcin.R
-import kotlinx.android.synthetic.main.genr_item.view.*
+//import kotlinx.android.synthetic.main.genr_item.view.*
 
 class GenrAdapter: RecyclerView.Adapter<GenrAdapter.GenrViewHolder>() {
     var genr:List<String> = listOf()
@@ -31,7 +32,7 @@ class GenrAdapter: RecyclerView.Adapter<GenrAdapter.GenrViewHolder>() {
     override fun getItemCount()=genr.size
 
     inner class GenrViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nameGenr1 = itemView.nameGenr1
+        val nameGenr1 = itemView.findViewById<TextView>(R.id.nameGenr1)
     }
 
 }

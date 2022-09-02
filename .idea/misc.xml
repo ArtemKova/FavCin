@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/FavCin/app/src/main/res/drawable/circle_popularity.xml" value="0.1" />
         <entry key="..\:/Android/FavCin/app/src/main/res/layout/activity_main.xml" value="0.12552083333333333" />
         <entry key="..\:/Android/FavCin/app/src/main/res/layout/actor_item.xml" value="0.22" />
         <entry key="..\:/Android/FavCin/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />

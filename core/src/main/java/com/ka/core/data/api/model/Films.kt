@@ -1,8 +1,8 @@
-package com.ka.favcin.newarch.data.api.model
+package com.ka.core.data.api.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.ka.favcin.newarch.data.db.Results
+import com.ka.core.data.db.Results
 
 data class Films(
     @SerializedName("page")

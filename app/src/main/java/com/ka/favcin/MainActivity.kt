@@ -13,9 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ka.favcin.databinding.ActivityMainBinding
 import com.ka.favcin.ui.MAIN
 import com.ka.favcin.utils.api.ApiFactory
-import com.ka.favcin.newarch.data.api.model.Genre
-import com.ka.favcin.ui.FanApp
-import com.ka.favcin.ui.ViewModelFactory
+import com.ka.core.data.api.model.Genre
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -41,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         MAIN = this
         val sharedPreference =  getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
-        var genr: List<Genre>
+        var genr: List<com.ka.core.data.api.model.Genre>
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
 //        val navController = findNavController(R.id.nav_host_fragment)

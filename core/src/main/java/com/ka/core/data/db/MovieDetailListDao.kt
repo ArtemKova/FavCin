@@ -1,4 +1,4 @@
-package com.ka.favcin.newarch.data.db
+package com.ka.core.data.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

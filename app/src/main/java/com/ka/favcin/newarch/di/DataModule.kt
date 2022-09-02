@@ -1,8 +1,8 @@
 package com.ka.favcin.newarch.di
 
 import android.app.Application
-import com.ka.favcin.database.AppDatabase
-import com.ka.favcin.newarch.data.db.MovieDetailListDao
+import com.ka.core.data.db.MovieDetailListDao
+import com.ka.core.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 
@@ -14,7 +14,7 @@ interface DataModule {
         @Provides
         fun provideMovieDataListDao(
             application: Application
-        ):MovieDetailListDao{
+        ): com.ka.core.data.db.MovieDetailListDao {
             return AppDatabase.getInstance(application).movieDetailListDao()
         }
     }

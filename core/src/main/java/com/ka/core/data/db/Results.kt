@@ -1,15 +1,12 @@
-package com.ka.favcin.newarch.data.db
+package com.ka.core.data.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.ka.favcin.newarch.GenrConverter
 
 
 @Entity(tableName = "movie_detail_list")
-@TypeConverters(GenrConverter::class)
 data class Results(
 //     @SerializedName("adult")
 //     @Expose

@@ -10,8 +10,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ka.favcin.MainActivity
 import com.ka.favcin.R
 import com.ka.favcin.adapters.MovieAdapter
 import com.ka.favcin.adapters.MovieAdapter.OnPosterClickListener
@@ -88,7 +90,14 @@ class HomeFragment : Fragment() {
 //                }
             }
         })
-
+        movieAdapter.setOnReachEndListener(object : MovieAdapter.OnReachEndListener {
+            override fun onReachEnd() {
+                homeViewModel.loadData()
+//                if (!MainActivity.isLoading) {
+//                    downloadData(MainActivity.methodOfSort, MainActivity.page)
+//                }
+            }
+        })
 //        val disposable = ApiFactory.apiService.getMoviesFromApi()
 //            .map { it.results }
 ////            .flatMap {ApiFactory.apiService1.getLittlePostersFromApi(posterPath = it.toString())}

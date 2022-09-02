@@ -5,15 +5,15 @@ import androidx.annotation.RequiresApi
 import androidx.room.TypeConverter
 import java.util.stream.Collectors
 
- class GenrConverter {
+ class ListConverter {
     @RequiresApi(Build.VERSION_CODES.N)
     @TypeConverter
-    fun fromListGenr(list: List<String?>): String {
+    fun fromList(list: List<String?>): String {
         return list.stream().collect(Collectors.joining(","))
     }
 
     @TypeConverter
-     fun toListGenr(data: String): List<String> {
+     fun toList(data: String): List<String> {
         return (data.split(","))
     }
 }
