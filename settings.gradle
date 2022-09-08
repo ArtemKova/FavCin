@@ -1,2 +1,4 @@
 include ':app'
 rootProject.name = "FavCin"
+include ':core'
+include ':cores'

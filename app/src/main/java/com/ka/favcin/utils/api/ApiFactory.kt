@@ -1,5 +1,6 @@
 package com.ka.favcin.utils.api
 
+import com.ka.core.data.api.ApiService
 import retrofit2.Retrofit
 //import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
@@ -15,7 +16,7 @@ object ApiFactory {
         .baseUrl(BASE_URL)
         .build()
 
-    val apiService = retrofit.create(ApiService::class.java)
+    val apiService = retrofit.create(com.ka.core.data.api.ApiService::class.java)
 
     private val retrofit1 = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())

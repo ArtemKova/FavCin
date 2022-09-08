@@ -1,8 +1,12 @@
-package com.ka.favcin.database
+package com.ka.core.database
 import android.content.Context
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
+import com.ka.core.data.db.MovieDetailListDao
+import com.ka.core.data.db.Results
+import com.ka.favcin.newarch.ListConverter
 
+@Database(entities = [Results::class], version = 1,exportSchema = false)
+@TypeConverters(ListConverter::class)
 abstract class AppDatabase:RoomDatabase() {
     companion object{
         private var db:AppDatabase?= null
@@ -25,4 +29,5 @@ abstract class AppDatabase:RoomDatabase() {
 
         }
     }
+    abstract fun movieDetailListDao(): MovieDetailListDao
 }
